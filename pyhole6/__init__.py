@@ -57,9 +57,9 @@ class Pyhole6(object):
             if data.get("session").get("valid"):
                 self.session_obj = data.get("session")
             else:
-                msg = f"Authentication failed. {data.get("session").get("message")}"
+                msg = f"Authentication failed. {data.get('session').get('message')}"
                 self.logger.error(msg)
-                raise Exception(f"Authentication failed.\n{data.get("session").get("message")}")
+                raise Exception(f"Authentication failed.\n{data.get('session').get('message')}")
 
 
     async def logout(self):
@@ -82,9 +82,9 @@ class Pyhole6(object):
                     self.logger.info(f"Disabling ad blocking indefinitely.")
                 return data
             else:
-                msg = f"Unable to disable blocking. {data.get("session").get("message")}"
+                msg = f"Unable to disable blocking. {data.get('session').get('message')}"
                 self.logger.error(msg)
-                raise Exception(f"Error disabling blocking.\n{data.get("session").get("message")}")
+                raise Exception(f"Error disabling blocking.\n{data.get('session').get('message')}")
 
     async def enable_blocking(self, duration=None):
         async with self.session.post(f"{self.base_url}/dns/blocking",
@@ -98,9 +98,9 @@ class Pyhole6(object):
                     self.logger.info(f"Enabling ad blocking indefinitely.")
                 return data
             else:
-                msg = f"Unable to disable blocking. {data.get("session").get("message")}"
+                msg = f"Unable to disable blocking. {data.get('session').get('message')}"
                 self.logger.error(msg)
-                raise Exception(f"Error disabling blocking.\n{data.get("session").get("message")}")
+                raise Exception(f"Error disabling blocking.\n{data.get('session').get('message')}")
 
     async def get_blocking_status(self):
         async with self.session.get(f"{self.base_url}/dns/blocking",
