@@ -1,6 +1,6 @@
 # pyhole6 API Client
 
-![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)
+![Version](https://img.shields.io/badge/version-0.0.2-blue.svg)
 
 *pyhole6* is an asynchronous Python client for interacting with the Pi-hole v6.0 REST API. It provides a simple interface to perform various operations on your Pi-hole server.
 
