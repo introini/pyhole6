@@ -22,11 +22,11 @@ pip install pyhole6
 ### Initializing the Client
 
 ```
-from pyhole6 import pyhole6
+from pyhole6 import Pyhole6
 import asyncio
 
 async def main():
-    client = pyhole6("http://pi.hole", "your_password")
+    client = Pyhole6("http://pi.hole", "your_password")
     await client.connect()
     # Use the client here
     await client.disconnect()
@@ -37,7 +37,7 @@ asyncio.run(main())
 ### Using as a Context Manager
 
 ```
-async with pyhole6("http://pi.hole", "your_password") as client:
+async with Pyhole6("http://pi.hole", "your_password") as client:
     # Use the client here
 ```
 
