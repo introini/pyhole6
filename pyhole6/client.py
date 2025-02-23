@@ -2,7 +2,7 @@ import aiohttp
 from typing import Optional
 from .logger import setup_logger
 from .exceptions import AuthenticationError
-from .models import Session, Statistic, BlockingStatus, HostInfo, VersionInfo, HistoryEntry
+from .models import Session, StatsEntry, BlockingStatus, HostInfo, VersionInfo, HistoryEntry
 
 
 class Pyhole6:
@@ -14,6 +14,7 @@ class Pyhole6:
         self.logger = setup_logger()
         self._authenticated = False
         self._history = None
+        self._stats = None
 
     async def __aenter__(self):
         await self.connect()
@@ -30,8 +31,12 @@ class Pyhole6:
         self.session = aiohttp.ClientSession()
         await self.authenticate()
         if self._authenticated:
+
             from .resources.history import HistoryResource
             self._history = HistoryResource(self)
+
+            from .resources.stats import StatsResource
+            self._stats = StatsResource(self)
 
     async def disconnect(self):
         await self.logout()
@@ -62,3 +67,9 @@ class Pyhole6:
         if not self._authenticated:
             raise RuntimeError("Client is not authenticated. Call connect() first.")
         return self._history
+
+    @property
+    def stats(self):
+        if not self._authenticated:
+            raise RuntimeError("Client is not authenticated. Call connect() first.")
+        return self._stats
