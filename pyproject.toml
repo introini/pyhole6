@@ -9,8 +9,18 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 aiohttp = "^3.11.12"
+pytest-asyncio = "^0.25.3"
+pytest = "^8.3.4"
+pytest-aiohttp = "^1.1.0"
 
+
+[tool.poetry.group.dev.dependencies]
+pytest-asyncio = "^0.25.3"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "session"
+
