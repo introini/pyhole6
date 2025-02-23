@@ -1,6 +1,6 @@
 # pyhole6 API Client
 
-![Version](https://img.shields.io/badge/version-0.0.2-blue.svg)
+![Version](https://img.shields.io/badge/version-0.0.3-blue.svg)
 
 *pyhole6* is an asynchronous Python client for interacting with the Pi-hole v6.0 REST API. It provides a simple interface to perform various operations on your Pi-hole server.
 
@@ -43,49 +43,54 @@ async with Pyhole6("http://pi.hole", "your_password") as client:
 
 ### Available Methods
 
-#### Get Statistics
+#### Statistics
 
 ```
-stats = await client.get_stats()
+stats = await client.stats.summary()
 print(stats)
+
+
+now = datetime.datetime.now()
+_from = int(datetime.datetime.timestamp(now - datetime.timedelta(days=3)))
+until = int(datetime.datetime.timestamp(now))
+
+top_clients = await client.stats.top_clients(blocked=True, count=5)
+
+# Top 10 clients in the last 3 days
+top_clients_date_range = await client.stats.database('top_clients', (_from, until), blocked=False, count=10)}")
+
 ```
 
-#### Disable Blocking
+#### DNS - Disable Blocking
 
 ```
 # Disable blocking for 5 minutes (300 seconds)
-result = await client.disable_blocking(duration=300)
-print(result)
-```
+result = await client.dns.disable(timer=300)
 
-#### Enable Blocking
-
-```
-# Enable blocking immediately
-result = await client.enable_blocking()
-print(result)
-```
-
-#### Get Blocking Status
+# Disable blocking for indefinitely
+result = await client.dns.disable()
 
 ```
-status = await client.get_blocking_status()
+
+#### DNS - Enable Blocking
+
+```
+# Enable blocking for 5 minutes (300 seconds
+result = await client.dns.enable(timer=300)
+
+# Enable blocking indefinitely
+result = await client.dns.disable()
+
+```
+
+#### DNS - Get Blocking Status
+
+```
+status = await client.dns.status()
 print(status)
 ```
 
-#### Get Host Information
 
-```
-host_info = await client.get_host_info()
-print(host_info)
-```
-
-#### Get Version Information
-
-```
-version_info = await client.get_version_info()
-print(version_info)
-```
 
 ## Logging
 
@@ -114,7 +119,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the GPLv3 License.
-```
-
----
-Answer from Perplexity: pplx.ai/share
