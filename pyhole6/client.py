@@ -13,8 +13,11 @@ class Pyhole6:
         self.session_obj: Optional[Session] = None
         self.logger = setup_logger()
         self._authenticated = False
+
+        # Resources
         self._history = None
         self._stats = None
+        self._dns = None
 
     async def __aenter__(self):
         await self.connect()
@@ -37,6 +40,9 @@ class Pyhole6:
 
             from .resources.stats import StatsResource
             self._stats = StatsResource(self)
+
+            from .resources.dns import DNSResource
+            self._dns = DNSResource(self)
 
     async def disconnect(self):
         await self.logout()
@@ -83,3 +89,9 @@ class Pyhole6:
         if not self._authenticated:
             raise RuntimeError("Client is not authenticated. Call connect() first.")
         return self._stats
+
+    @property
+    def dns(self):
+        if not self._authenticated:
+            raise RuntimeError("Client is not authenticated. Call connect() first.")
+        return self._dns

@@ -12,15 +12,24 @@ class Session(dict):
     csrf: str|None
     message: Optional[str] = None
 
+
 @dataclass
 class StatsEntry(dict):
     pass
 
 @dataclass
-class BlockingStatus:
-    enabled: bool
+class BlockingStatus(dict):
+    blocking: str
+    took: int
     timer: Optional[int] = None
 
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'BlockingStatus':
+        return cls(
+            blocking=data.get('blocking'),
+            timer=data.get('timer'),
+            took=data.get('took')
+        )
 @dataclass
 class HostInfo:
     # Add relevant fields
