@@ -14,7 +14,6 @@ class Session(dict):
 
 @dataclass
 class StatsEntry(dict):
-
     pass
 
 @dataclass
@@ -50,3 +49,6 @@ class HistoryEntry:
             forwarded=data.get('forwarded', 0)
         )
 
+@dataclass
+class HistoryDBEntry(dict):
+    pass
