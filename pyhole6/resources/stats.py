@@ -31,10 +31,10 @@ class StatsResource(BaseResource):
 
     async def top_domains(self, blocked: Optional[bool] = False, count: Optional[int] = 10) -> StatsEntry:
         """
-        Fetch Top Clients from Pi-hole
+        Fetch Top Domains from Pi-hole
 
         Returns:
-            List of HistoryEntry objects
+            Top domains
         """
         params = {'blocked': f"{blocked}", 'count': count}
 
@@ -43,10 +43,10 @@ class StatsResource(BaseResource):
 
     async def upstreams(self) -> StatsEntry:
         """
-        Fetch Top Clients from Pi-hole
+        Fetch Upstreams from Pi-hole
 
         Returns:
-            List of HistoryEntry objects
+            Upstreams
         """
 
         data = await self._make_request('GET', 'stats/upstreams')
@@ -54,10 +54,10 @@ class StatsResource(BaseResource):
 
     async def recent_blocked(self, count: Optional[int] = 1) -> StatsEntry:
         """
-        Fetch Top Clients from Pi-hole
+        Fetch Recent blocked from Pi-hole
 
         Returns:
-            List of HistoryEntry objects
+            Recent blocked
         """
 
         data = await self._make_request('GET', 'stats/recent_blocked')
@@ -65,10 +65,10 @@ class StatsResource(BaseResource):
 
     async def query_types(self) -> StatsEntry:
         """
-        Fetch Top Clients from Pi-hole
+        Fetch Query Types from Pi-hole
 
         Returns:
-            List of HistoryEntry objects
+            query types
         """
 
         data = await self._make_request('GET', 'stats/query_types')
@@ -76,10 +76,10 @@ class StatsResource(BaseResource):
 
     async def database(self, endpoint: str, date_range: Tuple, **kwargs) -> StatsEntry:
         """
-        Fetch Top Clients from Pi-hole
+        Fetch Long term stats data related from Pi-hole
 
         Returns:
-            List of HistoryEntry objects
+            Long term data
         """
         params = {'from': date_range[0], 'until': date_range[1]}
         params.update(kwargs)
