@@ -13,8 +13,8 @@ class Session(dict):
     message: Optional[str] = None
 
 @dataclass
-class Statistic:
-    # Add relevant fields based on API response
+class StatsEntry(dict):
+
     pass
 
 @dataclass
@@ -38,15 +38,15 @@ class HistoryEntry:
     total: int
     cached: int
     blocked: int
-    forwarded: int
+    forwarded: int | None
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'HistoryEntry':
         return cls(
-            timestamp=datetime.fromtimestamp(data['timestamp']),
-            total=data['total'],
-            cached=data['cached'],
-            blocked=data['blocked'],
-            forwarded=data['forwarded']
+            timestamp=datetime.fromtimestamp(data.get('timestamp', 0)),
+            total=data.get('total', 0),
+            cached=data.get('cached', 0),
+            blocked=data.get('blocked', 0),
+            forwarded=data.get('forwarded', 0)
         )
 
