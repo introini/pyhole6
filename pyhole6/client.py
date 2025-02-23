@@ -2,7 +2,7 @@ import aiohttp
 from typing import Optional
 from .logger import setup_logger
 from .exceptions import AuthenticationError
-from .models import Session, StatsEntry, BlockingStatus, HostInfo, VersionInfo, HistoryEntry
+from .models import Session
 
 
 class Pyhole6:
@@ -58,9 +58,19 @@ class Pyhole6:
                 await self.session.close()
                 raise AuthenticationError(msg)
 
+    async def sessions(self):
+        async with self.session.get(f"{self.base_url}/auth/sessions",
+                                    headers={"sid": self.session_obj.sid}) as response:
+            data = await response.json()
+            if response.status == 200:
+                return data
+            else:
+                await self.session.close()
+                raise AuthenticationError(data.get('error'))
+
     async def logout(self):
-        if self.session_obj.get("sid"):
-            await self.session.delete(f"{self.base_url}/auth", headers={"sid": self.session_obj.get("sid")})
+        if self.session_obj.sid:
+            await self.session.delete(f"{self.base_url}/auth", headers={"sid": self.session_obj.sid})
 
     @property
     def history(self):
