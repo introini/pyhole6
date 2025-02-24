@@ -1,6 +1,6 @@
 # pyhole6 API Client
 
-![Version](https://img.shields.io/badge/version-0.0.3-blue.svg)
+![Version](https://img.shields.io/badge/version-0.0.4-blue.svg)
 
 *pyhole6* is an asynchronous Python client for interacting with the Pi-hole v6.0 REST API. It provides a simple interface to perform various operations on your Pi-hole server.
 
@@ -57,7 +57,7 @@ until = int(datetime.datetime.timestamp(now))
 top_clients = await client.stats.top_clients(blocked=True, count=5)
 
 # Top 10 clients in the last 3 days
-top_clients_date_range = await client.stats.database('top_clients', (_from, until), blocked=False, count=10)}")
+top_clients_date_range = await client.stats.database('top_clients', (_from, until), blocked=False, count=10)
 
 ```
 
