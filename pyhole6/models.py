@@ -6,10 +6,10 @@ from datetime import datetime
 @dataclass
 class Session(dict):
     valid: bool
-    sid: str|None
     validity: int
     totp: bool
-    csrf: str|None
+    sid: Optional[str] = None
+    csrf: Optional[str] = None
     message: Optional[str] = None
 
 
@@ -46,7 +46,7 @@ class HistoryEntry:
     total: int
     cached: int
     blocked: int
-    forwarded: int | None
+    forwarded: Optional[int] =None
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'HistoryEntry':
